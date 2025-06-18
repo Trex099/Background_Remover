@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import './App.css';
-import { Header, Hero, ImageProcessor, FeatureShowcase, PricingSection, Footer } from './components';
+import { Header, Hero, ImageProcessor, FeatureShowcase, AboutSection, TestimonialsSection, Footer } from './components';
 
 function App() {
   const [uploadedImage, setUploadedImage] = useState(null);
@@ -112,7 +112,8 @@ function App() {
               error={error}
             />
             <FeatureShowcase />
-            <PricingSection />
+            <AboutSection />
+            <TestimonialsSection />
           </>
         ) : (
           <ImageProcessor 

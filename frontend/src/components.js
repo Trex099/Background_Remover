@@ -1,31 +1,39 @@
 import React, { useState, useRef, useCallback } from 'react';
 
-// Sample images for demo
+// Sample images for demo with diversity
 const SAMPLE_IMAGES = [
   {
     id: 1,
-    url: "https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=400&h=400&fit=crop&crop=face",
-    alt: "Professional woman portrait"
+    url: "https://images.pexels.com/photos/6484132/pexels-photo-6484132.jpeg?w=400&h=400&fit=crop&crop=face",
+    alt: "Diverse professional portrait"
   },
   {
     id: 2,
-    url: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?w=400&h=400&fit=crop&crop=face",
-    alt: "Smiling woman portrait"
+    url: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?w=400&h=400&fit=crop&crop=face",
+    alt: "Multicultural business team"
   },
   {
     id: 3,
-    url: "https://images.pexels.com/photos/11302135/pexels-photo-11302135.jpeg?w=400&h=400&fit=crop&crop=face",
-    alt: "Business woman portrait"
+    url: "https://images.pexels.com/photos/7550298/pexels-photo-7550298.jpeg?w=400&h=400&fit=crop&crop=face",
+    alt: "Diverse team collaboration"
   },
   {
     id: 4,
-    url: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400&h=400&fit=crop",
-    alt: "Product photography"
+    url: "https://images.pexels.com/photos/3811111/pexels-photo-3811111.jpeg?w=400&h=400&fit=crop&crop=face",
+    alt: "Diverse group of people"
   }
 ];
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <header className="bg-white/80 backdrop-blur-lg border-b border-purple-100 sticky top-0 z-50 shadow-sm">
@@ -40,25 +48,37 @@ export const Header = () => {
                 <span className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                   ClearCut
                 </span>
-                <div className="text-xs text-gray-500 font-medium">AI POWERED</div>
+                <div className="text-xs text-gray-500 font-medium">100% FREE</div>
               </div>
             </div>
           </div>
           
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">Features</a>
-            <a href="#pricing" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">Pricing</a>
-            <a href="#api" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">API</a>
-            <a href="#about" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">About</a>
+            <button 
+              onClick={() => scrollToSection('features')}
+              className="text-gray-700 hover:text-purple-600 font-medium transition-colors"
+            >
+              Features
+            </button>
+            <button 
+              onClick={() => scrollToSection('about')}
+              className="text-gray-700 hover:text-purple-600 font-medium transition-colors"
+            >
+              About
+            </button>
+            <button 
+              onClick={() => scrollToSection('testimonials')}
+              className="text-gray-700 hover:text-purple-600 font-medium transition-colors"
+            >
+              Community
+            </button>
           </nav>
 
           <div className="flex items-center space-x-4">
-            <button className="text-gray-700 hover:text-purple-600 font-medium transition-colors hidden md:block">
-              Sign In
-            </button>
-            <button className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-2 rounded-xl hover:from-purple-600 hover:to-pink-600 transition-all duration-200 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-              Get Started
-            </button>
+            <div className="hidden md:flex items-center space-x-2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-semibold">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              100% Free Forever
+            </div>
             
             <button 
               className="md:hidden text-gray-700"
@@ -74,11 +94,24 @@ export const Header = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-purple-100">
             <nav className="flex flex-col space-y-4">
-              <a href="#features" className="text-gray-700 hover:text-purple-600 font-medium">Features</a>
-              <a href="#pricing" className="text-gray-700 hover:text-purple-600 font-medium">Pricing</a>
-              <a href="#api" className="text-gray-700 hover:text-purple-600 font-medium">API</a>
-              <a href="#about" className="text-gray-700 hover:text-purple-600 font-medium">About</a>
-              <a href="#signin" className="text-gray-700 hover:text-purple-600 font-medium">Sign In</a>
+              <button 
+                onClick={() => scrollToSection('features')}
+                className="text-gray-700 hover:text-purple-600 font-medium text-left"
+              >
+                Features
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')}
+                className="text-gray-700 hover:text-purple-600 font-medium text-left"
+              >
+                About
+              </button>
+              <button 
+                onClick={() => scrollToSection('testimonials')}
+                className="text-gray-700 hover:text-purple-600 font-medium text-left"
+              >
+                Community
+              </button>
             </nav>
           </div>
         )}
@@ -121,9 +154,9 @@ export const Hero = ({ onImageUpload, onSampleSelect, isProcessing, uploadedImag
     <section className="py-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-100 to-pink-100 rounded-full text-purple-700 text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-purple-500 rounded-full mr-2 animate-pulse"></span>
-            AI-Powered Background Removal
+          <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full text-green-700 text-sm font-medium mb-6">
+            <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+            100% Free • Unlimited Usage • No Sign-up Required
           </div>
           
           <h1 className="text-6xl md:text-7xl font-bold text-gray-900 mb-6 leading-tight">
@@ -136,7 +169,9 @@ export const Hero = ({ onImageUpload, onSampleSelect, isProcessing, uploadedImag
           
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
             Professional background removal powered by cutting-edge AI. 
-            <span className="font-semibold text-purple-600"> Perfect results in seconds.</span>
+            <span className="font-semibold text-purple-600"> Completely free forever.</span>
+            <br />
+            <span className="text-lg text-green-600 font-medium">Use as many times as you want - no limits!</span>
           </p>
           
           <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500 mb-12">
@@ -144,19 +179,19 @@ export const Hero = ({ onImageUpload, onSampleSelect, isProcessing, uploadedImag
               <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              No Sign-up Required
+              Unlimited Processing
             </div>
             <div className="flex items-center">
               <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              High-Quality Results
+              HD Quality Results
             </div>
             <div className="flex items-center">
               <svg className="w-4 h-4 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
               </svg>
-              Lightning Fast
+              No Watermarks Ever
             </div>
           </div>
         </div>
@@ -168,8 +203,8 @@ export const Hero = ({ onImageUpload, onSampleSelect, isProcessing, uploadedImag
               <div className="absolute -inset-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-3xl blur opacity-20 group-hover:opacity-30 transition duration-300"></div>
               <div className="relative bg-white p-6 rounded-2xl shadow-2xl">
                 <img
-                  src="https://images.unsplash.com/photo-1581065178047-8ee15951ede6?w=400&h=500&fit=crop&crop=face"
-                  alt="Sample before"
+                  src="https://images.pexels.com/photos/6484132/pexels-photo-6484132.jpeg?w=400&h=500&fit=crop&crop=face"
+                  alt="Diverse professional sample"
                   className="rounded-xl w-full max-w-sm"
                 />
                 <div className="absolute -top-3 -right-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
@@ -231,7 +266,7 @@ export const Hero = ({ onImageUpload, onSampleSelect, isProcessing, uploadedImag
                   <p className="text-gray-500 mb-4">or drag and drop your image here</p>
                   
                   <div className="text-xs text-gray-400 mb-4">
-                    Supports: JPG, PNG • Max size: 5MB
+                    Supports: JPG, PNG • Max size: 5MB • <span className="text-green-600 font-semibold">100% Free Forever</span>
                   </div>
 
                   <input
@@ -254,7 +289,7 @@ export const Hero = ({ onImageUpload, onSampleSelect, isProcessing, uploadedImag
             {/* Sample images */}
             <div className="mt-8">
               <p className="text-center text-sm text-gray-600 mb-4 font-medium">
-                ✨ No image? Try these samples:
+                ✨ No image? Try these diverse samples:
               </p>
               <div className="flex justify-center space-x-3">
                 {SAMPLE_IMAGES.map((image) => (
@@ -308,7 +343,7 @@ export const ImageProcessor = ({ originalImage, processedImage, onNewImage, isPr
             <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
-            Processing Complete
+            Processing Complete • 100% Free
           </div>
           
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
@@ -316,7 +351,7 @@ export const ImageProcessor = ({ originalImage, processedImage, onNewImage, isPr
           </h2>
           
           <p className="text-gray-600 mb-8">
-            Background removed with precision AI technology
+            Background removed with precision AI technology - completely free, no limits!
           </p>
           
           <div className="flex justify-center space-x-4 mb-8">
@@ -400,7 +435,7 @@ export const ImageProcessor = ({ originalImage, processedImage, onNewImage, isPr
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                   </svg>
-                  Download HD Image
+                  Download HD Image - FREE
                 </span>
               )}
             </button>
@@ -419,7 +454,7 @@ export const ImageProcessor = ({ originalImage, processedImage, onNewImage, isPr
             onClick={onNewImage}
             className="text-purple-600 hover:text-purple-700 font-bold underline text-lg transition-colors duration-200"
           >
-            ✨ Process Another Image
+            ✨ Process Another Image - Still Free!
           </button>
         </div>
       </div>
@@ -455,32 +490,32 @@ export const FeatureShowcase = () => {
       description: "Your images are processed securely and never stored"
     },
     {
-      icon: "🎁",
-      title: "Free to Use",
-      description: "No watermarks, no limits on basic usage"
+      icon: "💚",
+      title: "100% Free Forever",
+      description: "No limits, no watermarks, no hidden costs"
     }
   ];
 
   const showcaseImages = [
     {
       label: "Original Portrait",
-      image: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?w=300&h=400&fit=crop&crop=face",
+      image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?w=300&h=400&fit=crop&crop=face",
       bgColor: "bg-gradient-to-br from-purple-100 to-pink-100"
     },
     {
       label: "Clean Transparent",
-      image: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?w=300&h=400&fit=crop&crop=face",
+      image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?w=300&h=400&fit=crop&crop=face",
       bgColor: "bg-white",
       isTransparent: true
     },
     {
       label: "New Background",
-      image: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?w=300&h=400&fit=crop&crop=face",
+      image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?w=300&h=400&fit=crop&crop=face",
       bgColor: "bg-gradient-to-br from-blue-400 to-purple-500"
     },
     {
       label: "Creative Freedom",
-      image: "https://images.unsplash.com/photo-1627161683077-e34782c24d81?w=300&h=400&fit=crop&crop=face",
+      image: "https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?w=300&h=400&fit=crop&crop=face",
       bgColor: "bg-gradient-to-br from-yellow-300 to-orange-400"
     }
   ];
@@ -494,7 +529,7 @@ export const FeatureShowcase = () => {
             Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">ClearCut</span>?
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Experience the future of background removal with cutting-edge AI technology
+            Experience the future of background removal with cutting-edge AI technology - completely free!
           </p>
         </div>
 
@@ -542,104 +577,183 @@ export const FeatureShowcase = () => {
   );
 };
 
-export const PricingSection = () => {
-  const plans = [
+export const AboutSection = () => {
+  return (
+    <section id="about" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">ClearCut AI</span>
+          </h2>
+          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            Democratizing professional background removal with cutting-edge AI technology, completely free for everyone.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Our Mission</h3>
+            <p className="text-gray-600 mb-6">
+              We believe that professional-quality image editing should be accessible to everyone, regardless of their budget or technical expertise. 
+              ClearCut AI was created to break down barriers and provide powerful background removal capabilities to creators, entrepreneurs, 
+              students, and professionals worldwide.
+            </p>
+            <p className="text-gray-600 mb-6">
+              Our platform serves a diverse global community, welcoming users from all backgrounds, cultures, and industries. 
+              Whether you're a small business owner, content creator, student, or just someone who needs a quick background removal, 
+              ClearCut AI is here to help - completely free, forever.
+            </p>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2 bg-green-100 text-green-700 px-4 py-2 rounded-full">
+                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span className="font-semibold">100% Free Forever</span>
+              </div>
+              <div className="flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full">
+                <span className="font-semibold">No Limits</span>
+              </div>
+            </div>
+          </div>
+          <div className="relative">
+            <img
+              src="https://images.unsplash.com/photo-1556484687-30636164638b?w=600&h=400&fit=crop"
+              alt="Diverse hands coming together symbolizing unity and collaboration"
+              className="rounded-2xl shadow-2xl"
+            />
+            <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-2xl shadow-lg">
+              <span className="font-bold">For Everyone</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="order-2 lg:order-1">
+            <img
+              src="https://images.unsplash.com/photo-1572021335469-31706a17aaef?w=600&h=400&fit=crop"
+              alt="Diverse team working together in a creative environment"
+              className="rounded-2xl shadow-2xl"
+            />
+          </div>
+          <div className="order-1 lg:order-2">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">The Technology Behind ClearCut</h3>
+            <p className="text-gray-600 mb-6">
+              ClearCut AI is powered by state-of-the-art machine learning models, specifically the RemBG library, 
+              which uses advanced neural networks trained on millions of images to achieve precision background removal.
+            </p>
+            
+            <div className="space-y-4 mb-6">
+              <div className="flex items-start space-x-3">
+                <div className="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center mt-0.5">
+                  <span className="text-purple-600 text-sm font-bold">AI</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Advanced Neural Networks</h4>
+                  <p className="text-gray-600 text-sm">Deep learning models trained on diverse datasets for accurate edge detection</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3">
+                <div className="w-6 h-6 bg-blue-100 rounded-full flex items-center justify-center mt-0.5">
+                  <span className="text-blue-600 text-sm font-bold">⚡</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Real-time Processing</h4>
+                  <p className="text-gray-600 text-sm">Optimized algorithms for lightning-fast background removal</p>
+                </div>
+              </div>
+              
+              <div className="flex items-start space-x-3">
+                <div className="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center mt-0.5">
+                  <span className="text-green-600 text-sm font-bold">🔒</span>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900">Privacy-First Design</h4>
+                  <p className="text-gray-600 text-sm">Images are processed securely and never stored on our servers</p>
+                </div>
+              </div>
+            </div>
+            
+            <p className="text-gray-600">
+              We continuously improve our algorithms to ensure the best possible results for our diverse user base, 
+              supporting various image types, skin tones, and challenging backgrounds.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const TestimonialsSection = () => {
+  const testimonials = [
     {
-      name: "Free",
-      price: "$0",
-      period: "forever",
-      description: "Perfect for personal use",
-      features: [
-        "5 images per month",
-        "Standard quality",
-        "Basic support",
-        "PNG download"
-      ],
-      buttonText: "Get Started",
-      buttonStyle: "bg-gray-100 text-gray-700 hover:bg-gray-200"
+      name: "Maria Rodriguez",
+      role: "Small Business Owner",
+      image: "https://images.pexels.com/photos/3811111/pexels-photo-3811111.jpeg?w=150&h=150&fit=crop&crop=face",
+      quote: "ClearCut has been a game-changer for my online store. Professional product photos without the cost!"
     },
     {
-      name: "Pro",
-      price: "$9",
-      period: "month",
-      description: "For professionals & creators",
-      features: [
-        "100 images per month",
-        "HD quality",
-        "Priority support",
-        "API access",
-        "Batch processing"
-      ],
-      buttonText: "Start Free Trial",
-      buttonStyle: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 shadow-lg",
-      popular: true
+      name: "James Chen",
+      role: "Content Creator",
+      image: "https://images.unsplash.com/photo-1566044103142-bd07c8b82913?w=150&h=150&fit=crop&crop=face",
+      quote: "Amazing quality and completely free! I use it daily for my social media content."
     },
     {
-      name: "Business",
-      price: "$29",
-      period: "month",
-      description: "For teams & businesses",
-      features: [
-        "Unlimited images",
-        "Ultra HD quality",
-        "24/7 support",
-        "Advanced API",
-        "White-label solution",
-        "Custom integrations"
-      ],
-      buttonText: "Contact Sales",
-      buttonStyle: "bg-gray-100 text-gray-700 hover:bg-gray-200"
+      name: "Aisha Patel",
+      role: "Graphic Designer",
+      image: "https://images.pexels.com/photos/7550298/pexels-photo-7550298.jpeg?w=150&h=150&fit=crop&crop=face",
+      quote: "The AI is incredibly accurate. It saves me hours of manual editing work every week."
+    },
+    {
+      name: "David Johnson",
+      role: "Student",
+      image: "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?w=150&h=150&fit=crop&crop=face",
+      quote: "Perfect for my school projects and presentations. Love that it's completely free!"
     }
   ];
 
   return (
-    <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 to-pink-50">
+    <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 to-pink-50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Choose Your <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Plan</span>
+            Loved by Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600">Global Community</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Start free, upgrade when you need more power
+            Join thousands of creators, entrepreneurs, and professionals who trust ClearCut AI for their background removal needs.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, index) => (
-            <div key={index} className={`relative bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border ${plan.popular ? 'border-purple-200 scale-105' : 'border-gray-200'}`}>
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
-                    ⭐ Most Popular
-                  </span>
-                </div>
-              )}
-              
-              <div className="text-center mb-8">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{plan.name}</h3>
-                <p className="text-gray-600 mb-4">{plan.description}</p>
-                <div className="mb-4">
-                  <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-                  <span className="text-gray-500">/{plan.period}</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {testimonials.map((testimonial, index) => (
+            <div key={index} className="bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 border border-purple-100">
+              <div className="flex items-center mb-4">
+                <img
+                  src={testimonial.image}
+                  alt={`${testimonial.name} profile`}
+                  className="w-12 h-12 rounded-full object-cover mr-4"
+                />
+                <div>
+                  <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
+                  <p className="text-sm text-gray-600">{testimonial.role}</p>
                 </div>
               </div>
-
-              <ul className="space-y-3 mb-8">
-                {plan.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-center">
-                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    <span className="text-gray-700">{feature}</span>
-                  </li>
+              <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+              <div className="flex text-yellow-400 mt-4">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
                 ))}
-              </ul>
-
-              <button className={`w-full py-3 rounded-xl font-bold transition-all duration-200 ${plan.buttonStyle}`}>
-                {plan.buttonText}
-              </button>
+              </div>
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <div className="inline-flex items-center px-6 py-3 bg-white/80 backdrop-blur-lg rounded-full shadow-lg">
+            <span className="text-2xl font-bold text-gray-900 mr-2">10,000+</span>
+            <span className="text-gray-600">Happy users worldwide</span>
+          </div>
         </div>
       </div>
     </section>
@@ -650,19 +764,19 @@ export const Footer = () => {
   const footerSections = [
     {
       title: "Product",
-      links: ["Features", "Pricing", "API Documentation", "Integrations", "Changelog"]
+      links: ["Features", "How it Works", "Examples", "FAQ", "Support"]
     },
     {
       title: "Use Cases",
-      links: ["E-commerce", "Marketing", "Photography", "Social Media", "Design"]
+      links: ["E-commerce", "Social Media", "Presentations", "Marketing", "Personal Photos"]
     },
     {
       title: "Resources",
-      links: ["Help Center", "Tutorials", "Blog", "Community", "Status"]
+      links: ["Blog", "Tutorials", "Community", "Best Practices", "Tips & Tricks"]
     },
     {
       title: "Company",
-      links: ["About Us", "Careers", "Press", "Contact", "Privacy"]
+      links: ["About Us", "Contact", "Privacy", "Terms", "Accessibility"]
     }
   ];
 
@@ -680,11 +794,11 @@ export const Footer = () => {
                 <span className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                   ClearCut
                 </span>
-                <div className="text-xs text-gray-400 font-medium">AI POWERED</div>
+                <div className="text-xs text-gray-400 font-medium">100% FREE</div>
               </div>
             </div>
             <p className="text-gray-400 text-sm mb-6">
-              Professional background removal powered by cutting-edge AI technology.
+              Professional background removal powered by cutting-edge AI technology. Free forever, for everyone.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors">
@@ -720,13 +834,20 @@ export const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 ClearCut AI. All rights reserved.
+              © 2025 ClearCut AI. All rights reserved. Made with ❤️ for everyone.
             </div>
             
             <div className="flex space-x-6 text-sm text-gray-400">
               <a href="#" className="hover:text-purple-400 transition-colors">Terms of Service</a>
               <a href="#" className="hover:text-purple-400 transition-colors">Privacy Policy</a>
-              <a href="#" className="hover:text-purple-400 transition-colors">Cookie Policy</a>
+              <a href="#" className="hover:text-purple-400 transition-colors">Accessibility</a>
+            </div>
+          </div>
+          
+          <div className="text-center mt-8">
+            <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+              <span className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+              Always Free • No Limits • No Watermarks
             </div>
           </div>
         </div>
